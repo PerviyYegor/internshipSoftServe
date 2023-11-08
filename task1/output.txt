@@ -1,21 +1,5 @@
 
-In Tue Nov  7 18:09:09 EET 2023 found with pattern "information" in file ./file.txt this num of match (row num:pattern):
-   1 2:information
-   2 1:information
-
-In Tue Nov  7 18:09:14 EET 2023 found with pattern "information" in file ./file.txt this num of match (row num:pattern):
-   1 2:information
-   2 1:information
-
-In Tue Nov  7 18:09:19 EET 2023 found with pattern "information" in file ./file.txt this num of match (row num:pattern):
-   1 2:information
-   2 1:information
-
-In Tue Nov  7 18:09:24 EET 2023 found with pattern "information" in file ./file.txt this num of match (row num:pattern):
-   1 2:information
-   2 1:information
-
-In Tue Nov  7 18:09:29 EET 2023 found with pattern "information" in file ./file.txt this num of match (row num:pattern):
+In Wed Nov  8 13:27:17 EET 2023 found with pattern "information" in file ./file.txt this num of match (row num:pattern):
    1 2:information
    2 1:information
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ $# -ne 4 ]; then
+if [ $# -ne 2 ]; then
     echo "Usage: $0 <pattern> <path> <saveto>"
     echo "  <pattern>: pattern for search"
     echo "  <path>: path to file where to search"
@@ -12,8 +12,8 @@ fi
 
 pattern="$1"
 path="$2"
-secToWait="$3"
-saveto="$4"
+secToWait="${3:-900}"
+saveto="${4:-"output.txt"}"
 echo "">$saveto
 while true; do 
     echo "In $(date) found with pattern \"$pattern\" in file $path this num of match (row num:pattern):"
