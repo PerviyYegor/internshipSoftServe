@@ -21,7 +21,9 @@ To achieve this, I followed a series of steps:
 To use this script, follow these steps:
 
 - Grant executable permissions to the script:
-    ʼʼʼchmod +x <pathToScript>ʼʼʼ
+    ʼʼʼ
+    chmod +x <pathToScript>
+    ʼʼʼ
 
 - Start the script:
   - With default values, the script will search for your specified word in the file every 15 minutes and write the output to `./output.txt`:
