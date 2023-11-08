@@ -1,0 +1,23 @@
+#!/bin/bash
+
+if [ $# -ne 4 ]; then
+    echo "Usage: $0 <pattern> <path> <saveto>"
+    echo "  <pattern>: pattern for search"
+    echo "  <path>: path to file where to search"
+    echo "  <secToWait>: number of seconds to repeat check (def: 900 - 15min)"
+    echo "  <saveto>: output file (def: ./output.txt)"
+    echo "example: ./task1_script information ./file.txt 900 output.txt"
+    exit 1
+fi
+
+pattern="$1"
+path="$2"
+secToWait="$3"
+saveto="$4"
+echo "">$saveto
+while true; do 
+    echo "In $(date) found with pattern \"$pattern\" in file $path this num of match (row num:pattern):"
+    grep -Enow "$pattern" $path | sort | uniq -c | sort -nk 1,1
+    echo ""
+    sleep $secToWait
+done>>$saveto
