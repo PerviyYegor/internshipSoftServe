@@ -28,11 +28,19 @@ To use this script, follow these steps:
 - Start the script:
   - With default values, the script will search for your specified word in the file every 15 minutes and write the output to `./output.txt`:
     ```
-    ./task1_script <yourWord> <pathToFile>
+    /path/to/script/task1_script <yourWord> <pathToFile>
     ```
   - You can also customize the script by providing additional values:
     ```
-    ./task1_script <yourWord> <pathToFile> <secToWait> <pathToOutputFile>
+    /path/to/script/task1_script <yourWord> <pathToFile> <secToWait> <pathToOutputFile>
     ```
+  - If you want to run it easy and fast here is an example:
+    ```
+    git clone https://github.com/PerviyYegor/internshipSoftServe
+    cd internshipSoftServe/task1
+    ./task1_script information ./file.txt 5 output.txt
+    ```
+    this one is checking word 'information' in file './file.txt' every 5 second and write output to './output.txt'
+
 
 That's it! Best of luck with the script. :)
