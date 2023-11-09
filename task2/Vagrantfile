@@ -1,0 +1,33 @@
+Vagrant.configure("2") do |config|
+  #config.vm.provision "shell", inline: "??"
+  config.vm.provision "shell", path: "scriptGeneral.sh"
+  config.vm.provider "libvirt"
+
+
+  config.vm.define "serv1" do |serv1|
+    serv1.vm.box = "centos/7"
+    serv1.vm.provision "file", source: "./fileSamples/index.html", destination: "/usr/share/nginx/html/index.html"
+    serv1.vm.provision "file", source: "./fileSamples/nginxConf_serv1-host.conf", destination: "/etc/nginx/nginx.conf"
+    serv1.vm.provision "shell", path: "scriptServ1-host.sh"
+
+    serv1.vm.network 'private_network',
+    :libvirt__network_name => 'primary_vagrant_private_net',
+    ip: '192.168.1.10',
+    :libvirt__netmask => '255.255.255.0',
+    :libvirt__forward_mode => 'route',
+    :libvirt__dhcp_enabled => true
+  end
+
+  config.vm.define "serv2" do |serv2|
+    serv2.vm.box = "centos/7"
+    serv2.vm.provision "file", source: "./fileSamples/nginxConf_serv2-redir.conf", destination: "/etc/nginx/nginx.conf"
+    serv2.vm.provision "shell", path: "scriptServ2-redir.sh"
+
+    serv2.vm.network 'private_network',
+    :libvirt__network_name => 'primary_vagrant_private_net',
+    ip: '192.168.2.10',
+    :libvirt__netmask => '255.255.255.0',
+    :libvirt__forward_mode => 'route',
+    :libvirt__dhcp_enabled => true
+  end
+end
