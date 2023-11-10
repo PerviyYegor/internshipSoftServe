@@ -4,7 +4,7 @@ Task: Launch a VM and install WordPress using Terraform and Ansible.
     ```
     git clone https://github.com/PerviyYegor/internshipSoftServe
     ```
-1. To start, make sure to update the local VM IP in the `/task3/machinesIP.yaml` file to a free IP within your network under the `vagrantWordpress` section.
+1. To start, make sure to update the local VM IP in the `/task3/machinesIP.yaml` file to a free IP within your network under the `vagrantWordpress` section. And configure credentials to DB in `task3/ansible-playbook/wordpress-playbook/roles/mysql/defaults/main.yml`.
 
 2. Initiate the creation of the VM with pre-installed and pre-configured WordPress using the following commands:
     ```
