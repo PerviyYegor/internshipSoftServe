@@ -1,0 +1,17 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+require 'yaml'
+
+settings = YAML.load_file 'machinesIP.yaml'
+vagrant_ip_address = settings['vagrantWordpress']['public_ip']
+vagrant_mask_address = settings['vagrantWordpress']['netmask']
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "centos/7"
+  config.vm.network 'private_network', ip: vagrant_ip_address, netmask: vagrant_mask_address
+  config.vm.provision "ansible" do |ansible|
+    ansible.verbose = "v"
+    ansible.limit = "all"
+    ansible.playbook = "ansible-playbook/wordpress-playbook/playbook.yml"
+  end
+end

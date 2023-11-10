@@ -1,0 +1,3 @@
+vagrantWordpress:
+    public_ip: '192.168.5.10'
+    netmask: '255.255.255.0'

@@ -1,0 +1,22 @@
+- name: Start MariaDB service
+  systemd:
+    name: mariadb
+    state: started
+  become: true
+
+- name: Create mysql database
+  mysql_db:
+    name: "{{ wp_mysql_db }}"
+    state: present
+  become: true
+  vars:
+    login_path: "{{ wp_mysql_user }}"
+
+- name: Create mysql user
+  mysql_user:
+    name: "{{ wp_mysql_user }}"
+    password: "{{ wp_mysql_password }}"
+    priv: "*.*:ALL"
+  become: true
+  vars:
+    login_path: "{{ wp_mysql_user }}"
