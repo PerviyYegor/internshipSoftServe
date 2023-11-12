@@ -27,6 +27,6 @@ resource "docker_container" "apache" {
 
   volumes {
     container_path = "/usr/local/apache2/htdocs"
-    host_path      = "/Users/yperv/devOps_intern/task4/siteExample/008-infinity-master/"
+    host_path      = "<path to repository>/task4/siteExample/"
   }
 }
