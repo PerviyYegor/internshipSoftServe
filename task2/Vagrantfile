@@ -16,8 +16,11 @@ Vagrant.configure("2") do |config|
 
   config.vm.define "serv2" do |serv2|
     serv2.vm.box = "centos/7"
+    serv2.vm.provision "file", source: "./fileSamples/nginxConf_serv2-redir.conf", destination: "~/nginx.conf"
     serv2.vm.provision "shell", path: "scriptServ2-redir.sh"
 ##
+    
+
     serv2.vm.network 'private_network',
     ip: '192.168.2.10', netmask:'255.255.255.0'
   end
