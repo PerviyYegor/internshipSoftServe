@@ -3,6 +3,7 @@ Vagrant.configure("2") do |config|
     config.vm.provision "file", source: "../main.tf", destination: "~/main.tf"
     config.vm.provision "file", source: "../siteExample", destination: "~/siteExample"
     config.vm.provision "file", source: "./nrpe.cfg", destination: "~/nrpe.cfg"
+    config.vm.provision "file", source: "./check_docker", destination: "~/check_docker"
     config.vm.provision "shell", path: "dockerApache.sh"
     config.vm.provision "shell", path: "nagiosMonitoring.sh"
 

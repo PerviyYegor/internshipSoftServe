@@ -1,0 +1,72 @@
+#!/bin/bash
+# check for --help|-h or --memory or --cpu or --status flag
+
+if [[ $1 == "-h" || $1 == "--help" ]]; then
+	echo "Usage: check_docker [[--memory WARN:CRIT|--cpu WARN:CRIT|--status]] --container <name>"
+elif [[ $1 == "--memory" ]]; then
+    if [[ -z $2 || -z $3 || -z $4 ]]; then
+        echo "Missing argument for --memory option. Usage: check_docker --memory WARN:CRIT --container <name>"
+        exit 3
+    fi
+    # split warning and critical thresholds
+    IFS=':' read -ra THRESHOLDS <<< "$2"
+    WARN=${THRESHOLDS[0]}
+    CRIT=${THRESHOLDS[1]}
+    # get container name
+    CONTAINER=$4
+    # get container memory usage
+    #USAGE=$(docker stats --no-stream --format "{{.MemUsage}}" $CONTAINER | awk '{print $1}' | numfmt --to=iec-i)
+    USAGE=$(docker stats --no-stream --format "{{.MemPerc}}" $CONTAINER | sed 's/.$//')
+    # compare usage against thresholds
+    if (( $(echo "$USAGE > $CRIT" | awk '{print ($1>$2)}') )); then
+        echo "CRITICAL: Memory usage of container $CONTAINER is at $USAGE%"
+        exit 2
+    elif (( $(echo "$USAGE > $WARN" | awk '{print ($1>$2)}') )); then
+        echo "WARNING: Memory usage of container $CONTAINER is at $USAGE%"
+        exit 1
+    else
+        echo "OK: Memory usage of container $CONTAINER is at $USAGE%"
+        exit 0
+    fi
+elif [[ $1 == "--cpu" ]]; then
+    if [[ -z $2 || -z $3 || -z $4 ]]; then
+        echo "Missing argument for --cpu option. Usage: check_docker --cpu WARN:CRIT --container <name>"
+        exit 3
+    fi
+    # split warning and critical thresholds
+    IFS=':' read -ra THRESHOLDS <<< "$2"
+    WARN=${THRESHOLDS[0]}
+    CRIT=${THRESHOLDS[1]}
+    # get container name
+    CONTAINER=$4
+    # get container CPU usage
+    USAGE=$(docker stats --no-stream --format "{{.CPUPerc}}" $CONTAINER | sed 's/.$//')
+    # compare usage against thresholds
+    if (( $(echo "$USAGE > $CRIT" | awk '{print ($1>$2)}') )); then
+        echo "CRITICAL: CPU usage of container $CONTAINER is at $USAGE%"
+        exit 2
+    elif (( $(echo "$USAGE > $WARN" | awk '{print ($1>$2)}') )); then
+        echo "WARNING: CPU usage of container $CONTAINER is at $USAGE%"
+        exit 1
+    else
+        echo "OK: CPU usage of container $CONTAINER is at $USAGE%"
+        exit 0
+    fi
+elif [[ $1 == "--status" ]]; then
+    if [[ -z $2 || -z $3 ]]; then
+        echo "Missing argument for --status option. Usage: check_docker --status --container <name>"
+        exit 3
+    fi
+    CONTAINER=$3
+    STATUS=$(docker inspect --format "{{.State.Status}}" $CONTAINER)
+    if [ "$STATUS" == "running" ]; then
+	    echo "OK: container $CONTAINER is running"
+	    exit 0
+    else
+	    echo "CRITICAL: container $CONTAINER is $STATUS"
+	    exit 2
+    fi
+else
+    echo "Invalid flag. Usage: check_docker [[--memory WARN:CRIT|--cpu WARN:CRIT|--status]] --container <name>"
+    exit 3
+fi
