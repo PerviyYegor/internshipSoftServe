@@ -21,12 +21,12 @@ resource "docker_container" "apache" {
   image = docker_image.apache.image_id
   name  = "apache"
   ports {
-    external = 8080
+    external = 80
     internal = 80
   }
 
   volumes {
     container_path = "/usr/local/apache2/htdocs"
-    host_path      = "<path to repository>/task4/siteExample/"
+    host_path      = "/home/vagrant/siteExample/"
   }
 }
