@@ -12,4 +12,10 @@ To initiate the Docker container running Apache, follow these steps:
     ```
 4. After approximately a minute, you can access your site at `localhost:8080` (Note: You can change the port in the Terraform configuration at `/task4/main.tf` within the `docker_container` resource in the `ports` section).
 
+Also: you can start Vagrant with you apache site and nagios monitoring of docker container. For this change  within the `docker_container` resource in the `volumes` section change path to `/home/vagrant/` and after this execute:
+ ```
+ cd task4/vagrantVM
+ vagrant up
+  ```
+
 That's it! Good luck with your deployment :)
