@@ -1,14 +1,16 @@
 - name: Install NRPE and Nagios plugins
   become: true
   yum:
-    name: "nrpe nagios-plugins-{load,http,users,procs,disk,swap,nrpe,uptime}"
+    name: "nrpe  wget nagios-plugins-{load,http,users,procs,disk,swap,nrpe,uptime,mysql}"
     state: present
 
-- name: Configure NRPE allowed hosts
+
+- name:  Copy nrpe.cfg
+  copy:
+    src: "{{ role_path }}/files/nrpe.cfg"
+    dest: /etc/nagios/nrpe.cfg
   become: true
-  lineinfile:
-    path: "/etc/nagios/nrpe.cfg"
-    line: "allowed_hosts=127.0.0.1,192.168.5.1"
+
 
 - name: Enable NRPE service
   become: true
