@@ -5,7 +5,9 @@ sudo yum install nano  nagios nagios-plugins-{load,http,users,procs,disk,swap,nr
 sudo yum install -y nrpe
 sudo systemctl start nagios
 sudo systemctl enable nagios
+sudo systemctl enable httpd
 sudo htpasswd -c /etc/nagios/passwd nagiosadmin
+sudo sed -i 's/SELINUX=permissive/SELINUX=disable/' /etc/selinux/config
 sudo setenforce 0
 
 sudo sh -c " echo 'cfg_file=/etc/nagios/servers/remote-server.cfg' >>/etc/nagios/nagios.cfg"

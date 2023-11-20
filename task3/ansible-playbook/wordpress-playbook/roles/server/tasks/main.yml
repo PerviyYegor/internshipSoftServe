@@ -14,3 +14,15 @@
     - httpd
     - mariadb-server
     - MySQL-python
+
+- name: Enable MariaDB service
+  systemd:
+    name: mariadb
+    state: started
+    enabled: yes
+
+- name: Enable httpd service
+  systemd:
+    name: httpd
+    state: started
+    enabled: yes
