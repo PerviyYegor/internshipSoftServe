@@ -1,9 +1,19 @@
 - name: Install NRPE and Nagios plugins
   become: true
   yum:
-    name: "nrpe  wget nagios-plugins-{load,http,users,procs,disk,swap,nrpe,uptime,mysql}"
+    name:
+      - nrpe
+      - wget
+      - nagios-plugins-load
+      - nagios-plugins-http
+      - nagios-plugins-users
+      - nagios-plugins-procs
+      - nagios-plugins-disk
+      - nagios-plugins-swap
+      - nagios-plugins-nrpe
+      - nagios-plugins-uptime
+      - nagios-plugins-mysql
     state: present
-
 
 - name:  Copy nrpe.cfg
   copy:

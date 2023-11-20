@@ -25,5 +25,12 @@
     mode: "0644"
     backup: yes 
   become: true
-  notify:
-  - restart apache
+
+- name: restart Apache
+  systemd:
+    name: httpd
+    state: restarted
+    enabled: yes
+  become: true
+
+
