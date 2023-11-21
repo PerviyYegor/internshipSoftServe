@@ -1,12 +1,11 @@
 Vagrant.configure("2") do |config|
     config.vm.box = "centos/7"
 
-    config.vm.provider "virtualbox" do |vb|
-        vb.customize ["guestproperty", "set", :id, "/VirtualBox/GuestAdd/VBoxService/--timesync-set-threshold", 1000]
-      end
       config.vm.provision :shell, :inline => "sudo rm /etc/localtime && sudo ln -s /usr/share/zoneinfo/Europe/Kiev /etc/localtime", run: "always"
+      config.vm.provision :shell, :inline => "echo '*/5 * * * * sudo systemctl restart chronyd.service' | crontab -", run: "always"
 
     config.vm.provision "file", source: "./files/remote-server.cfg", destination: "~/remote-server.cfg"
+    config.vm.provision :shell, :inline => "sudo setenforce 0", run: "always"
     config.vm.provision "shell", path: "nagiosInstall.sh"
 
     config.vm.network 'private_network',
