@@ -1,18 +1,25 @@
 Vagrant.configure("2") do |config|
     config.vm.box = "genebean/centos-7-docker-ce"
+
+    config.vm.provider "virtualbox" do |vb|
+      vb.customize ["guestproperty", "set", :id, "/VirtualBox/GuestAdd/VBoxService/--timesync-set-threshold", 1000]
+    end
+    config.vm.provision :shell, :inline => "sudo rm /etc/localtime && sudo ln -s /usr/share/zoneinfo/Europe/Kyiv /etc/localtime", run: "always"
+
     config.vm.provision "file", source: "../main.tf", destination: "~/main.tf"
     config.vm.provision "file", source: "../siteExample", destination: "~/siteExample"
     config.vm.provision "file", source: "./files/nagios-files/nrpe.cfg", destination: "~/nrpe.cfg"
     config.vm.provision "file", source: "./files/nagios-files/check_docker", destination: "~/check_docker"
     config.vm.provision "file", source: "./files/prometheus-files/node_exporter.service", destination: "~/node_exporter.service"
-    #config.vm.provision "shell", path: "dockerApache.sh"
+    config.vm.provision "shell", path: "dockerApache.sh"
 
     config.vm.provision "shell",
     run: "always",
     inline: "docker restart apache"
    
-    #config.vm.provision "shell", path: "nagiosMonitoring.sh"
+    config.vm.provision "shell", path: "nagiosMonitoring.sh"
     config.vm.provision "shell", path: "prometheusAgentInstall.sh"
+
 
     config.vm.network 'private_network',
     ip: '192.168.10.10', netmask:'255.255.255.0'

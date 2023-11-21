@@ -8,6 +8,12 @@ vagrant_mask_address = settings['vagrantWordpress']['netmask']
 
 Vagrant.configure("2") do |config|
   config.vm.box = "centos/7"
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.customize ["guestproperty", "set", :id, "/VirtualBox/GuestAdd/VBoxService/--timesync-set-threshold", 1000]
+  end
+  config.vm.provision :shell, :inline => "sudo rm /etc/localtime && sudo ln -s /usr/share/zoneinfo/Europe/Kiev /etc/localtime", run: "always"
+
   config.vm.network 'private_network', ip: vagrant_ip_address, netmask: vagrant_mask_address
   config.vm.provision "ansible" do |ansible|
     ansible.verbose = "v"
