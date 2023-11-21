@@ -9,6 +9,7 @@ Vagrant.configure("2") do |config|
     config.vm.provision "file", source: "./files/nagios-files/nrpe.cfg", destination: "~/nrpe.cfg"
     config.vm.provision "file", source: "./files/nagios-files/check_docker", destination: "~/check_docker"
     config.vm.provision "file", source: "./files/prometheus-files/node_exporter.service", destination: "~/node_exporter.service"
+    config.vm.provision "file", source: "./files/prometheus-files/daemon.json", destination: "~/daemon.json"
     config.vm.provision "shell", path: "dockerApache.sh"
 
     config.vm.provision "shell",

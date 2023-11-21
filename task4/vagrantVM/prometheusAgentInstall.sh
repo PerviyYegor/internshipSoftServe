@@ -20,3 +20,7 @@ sudo systemctl daemon-reload
 sudo systemctl enable node_exporter
 sudo systemctl start node_exporter
 
+sudo mv /home/vagrant/daemon.json /etc/docker/daemon.json
+
+sudo systemctl restart docker
+docker start apache
