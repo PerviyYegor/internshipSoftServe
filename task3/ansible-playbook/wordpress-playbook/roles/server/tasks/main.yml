@@ -1,4 +1,3 @@
-# tasks file for server
 #- name: Update yum cache
 #  yum: 
 #    name: '*'

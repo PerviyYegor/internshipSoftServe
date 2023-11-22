@@ -9,3 +9,4 @@
   - wordpress
   - nrpe
   - node-exporter
+  - mysql-exporter

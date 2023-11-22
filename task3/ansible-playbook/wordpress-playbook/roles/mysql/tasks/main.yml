@@ -21,3 +21,9 @@
   become: true
   vars:
     login_path: "{{ wp_mysql_user }}"
+
+- name: Set MySQL/MariaDB root password
+  become: true
+  command: mysqladmin -u root password "{{ mysql_root_password }}"
+  ignore_errors: true
+  when: mysql_root_password is defined
