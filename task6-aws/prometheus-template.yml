@@ -1,0 +1,27 @@
+global:
+  scrape_interval: 10s
+scrape_configs:
+  - job_name: 'prometheus_master'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: 'node_exporter_dockerHost'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['REPLACE_DOCKER_HOST_TARGETS:9100']
+
+  - job_name: 'node_exporter_dockerContainers'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['REPLACE_DOCKER_HOST_TARGETS:9323']
+
+  - job_name: 'node_exporter_wordpress'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['REPLACE_WORDPRESS_TARGETS:9100']
+
+  - job_name: 'node_exporter_mysql_wordpress'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['REPLACE_WORDPRESS_TARGETS:9104']
