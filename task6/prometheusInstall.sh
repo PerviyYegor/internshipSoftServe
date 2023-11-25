@@ -7,7 +7,7 @@ sudo yum install -y nano
 sudo sed -i 's/SELINUX=permissive/SELINUX=disable/' /etc/selinux/config
 sudo setenforce 0
 
-sudo wget -O /tmp/prometheus.tar.gz  https://github.com/prometheus/prometheus/releases/download/v2.48.0/prometheus-2.48.0.darwin-amd64.tar.gz
+sudo wget -O /tmp/prometheus.tar.gz  https://github.com/prometheus/prometheus/releases/download/v2.45.1/prometheus-2.45.1.linux-amd64.tar.gz
 
 sudo useradd --no-create-home --shell /bin/false prometheus
 sudo mkdir /etc/prometheus
