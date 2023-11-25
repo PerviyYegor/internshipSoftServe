@@ -14,7 +14,7 @@ To monitor with Prometheus the container with Apache in the VM from task 4 and t
 
 3. (Optional) If you changed the VM's IP in `/task3` or `/task4`, update the IP in the prometheus configuration file `/task6/files/prometheus.yml`.
 
-4. After this, you can start your VM with Nagios monitoring using the command:
+4. After this, you can start your VM with Prometheus monitoring using the command:
    ```bash
    vagrant up
    ```
