@@ -145,7 +145,8 @@ resource "null_resource" "execute-remote" {
   provisioner "remote-exec" {
     inline = [
     "chmod +x prometheusInstall.sh",
-    "./prometheusInstall.sh"
+    "./prometheusInstall.sh",
+    "sudo systemctl restart prometheus"
     ]
   }
 
