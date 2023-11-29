@@ -1,5 +1,5 @@
 Task: Launch a VM in AWS and install WordPress using Terraform and Ansible in EC2.
-Requirenments: registered connection to aws with awscli utility, Ansible and Terraform
+Requirenments: registered connection to AWS with awscli utility, Ansible and Terraform
 
 0. Git clone repository with completed tasks
     ```
@@ -9,14 +9,17 @@ Requirenments: registered connection to aws with awscli utility, Ansible and Ter
 
 1. Initiate the creation of the VM with pre-installed and pre-configured WordPress using the following commands:
     ```
-    task3/terraform init
-    task3/terraform plan
-    task3/terraform apply
+    task3-aws/terraform init
+    task3-aws/terraform plan
+    task3-aws/terraform apply
     ```
-2. After executing the commands above, Terraform will trigger AWS to create resources like ec-2 instance, network etc. After success raise of aws infrastacture you can check public ip of your machine in file `ip.txt` and connect to it with ssh by execution folow command(optional)
-```
-ssh -i .ssh/ansible-ssh-key.pem centos@$(ip.txt)
-```
+2. After executing the commands above, Terraform will trigger AWS to create resources like ec-2 instance, network etc. After success raise of aws infrastacture you can check public ip of your machine with execution of  
+    ```
+    aws ec2 describe-instances --instance-ids $instance_id \
+                                                          --query 'Reservations[*].Instances[*].PublicIpAddress' \
+                                                          --output text
+    ```
+
 3. You can also check connect to ec2 machine with ansible with execution folow commands (optional):
 ```
 cd andsible-playbook

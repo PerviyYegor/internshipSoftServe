@@ -77,7 +77,7 @@ resource "tls_private_key" "terraform_key" {
 resource "local_file" "privet_key" {
     content     =tls_private_key.terraform_key.private_key_pem
     filename = "terraform.pem"
-    file_permission = 0777
+    file_permission = 0600
 }
 
 
@@ -126,11 +126,9 @@ resource "aws_instance" "wordpress" {
   subnet_id = aws_subnet.main.id
   associate_public_ip_address = true
   vpc_security_group_ids = [aws_security_group.allow_ssh.id, aws_security_group.allow_http.id,aws_security_group.allow_prometheus.id]
-}
-
-resource "local_file" "ip" {
-  content  = aws_instance.wordpress.public_ip
-  filename = "ip.txt"
+  tags = {
+    Name = "wordpress"
+  }
 }
 
 
