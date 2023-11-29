@@ -22,5 +22,6 @@ Wait for the process to complete.
 
 4. The last output of the script should provide a local URL address with forwarding ports from Minikube. 
 Copy and paste this URL into your browser to check connections to EC2 instances in the target Prometheus section.
+Note: Do not close terminal session until you want to have access to Prometheus service from outside (your browser)
 
 That's all. Thank you for your attention!
