@@ -1,0 +1,28 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'prometheus'
+    metrics_path: "/metrics"
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: 'wordpress'
+    ec2_sd_configs:
+      - region: us-east-1
+        ports: 9100
+    relabel_configs:
+      - source_labels: [__meta_ec2_tag_Name]
+        regex: wordpress
+        action: keep
+        target_label: instance
+
+  - job_name: 'dockerApache'
+    ec2_sd_configs:
+      - region: us-east-1
+        ports: 9100
+    relabel_configs:
+      - source_labels: [__meta_ec2_tag_Name]
+        regex: docker
+        action: keep
+        target_label: instance

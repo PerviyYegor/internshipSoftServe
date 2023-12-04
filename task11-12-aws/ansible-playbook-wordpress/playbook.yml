@@ -1,0 +1,11 @@
+- hosts: all
+  gather_facts: False
+
+- hosts: all
+  roles:
+  - server
+  - php
+  - mysql
+  - wordpress
+  - node-exporter
+  - mysql-exporter
