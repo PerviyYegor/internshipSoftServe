@@ -1,2 +1,0 @@
-- include_tasks: installDependencies.yml
-- include_tasks: startApacheDocker.yml

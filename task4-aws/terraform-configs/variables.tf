@@ -34,3 +34,9 @@ variable "instance_tag" {
     default = "docker"
     description = "tag to identificate instance"
 }
+
+variable "allowed_ports" {
+  description = "List of allowed ports"
+  type        = list(number)
+  default     = [22, 80, 9100, 9323]
+}

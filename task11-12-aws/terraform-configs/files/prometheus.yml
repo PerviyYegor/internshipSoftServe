@@ -10,7 +10,7 @@ scrape_configs:
   - job_name: 'wordpress'
     ec2_sd_configs:
       - region: us-east-1
-        ports: 9100
+        port: 9100
     relabel_configs:
       - source_labels: [__meta_ec2_tag_Name]
         regex: wordpress
@@ -20,7 +20,7 @@ scrape_configs:
   - job_name: 'dockerApache'
     ec2_sd_configs:
       - region: us-east-1
-        ports: 9100
+        port: 9100
     relabel_configs:
       - source_labels: [__meta_ec2_tag_Name]
         regex: docker

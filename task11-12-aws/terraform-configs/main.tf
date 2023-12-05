@@ -17,9 +17,9 @@ resource "aws_instance" "prometheus" {
   ami                         = data.aws_ami.latest_amazon_linux_centos7_prometheus.id
   instance_type               = var.instance_type
   key_name                    = aws_key_pair.web_server_key.key_name
-  subnet_id                   = aws_subnet.main.id
+  subnet_id                   = aws_default_subnet.main.id
   associate_public_ip_address = true
-  vpc_security_group_ids      = [aws_security_group.allow_ssh.id, aws_security_group.allow_http.id, aws_security_group.allow_prometheus.id, aws_security_group.allow_prometheusMetricsExporter.id]
+  vpc_security_group_ids      = [aws_security_group.allow_traffic.id]
   iam_instance_profile        = aws_iam_instance_profile.instance_profile.name
 
 

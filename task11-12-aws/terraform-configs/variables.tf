@@ -35,13 +35,6 @@ variable "instance_tag" {
     description = "tag to identificate instance"
 }
 
-variable "target_instance_tags" {
-  default = [
-    "wordpress",
-    "docker"
-  ]
-}
-
 variable "iam_role_name" {
   default = "PrometheusEC2sdConfigRole"
 }
@@ -52,4 +45,10 @@ variable "policy_arn" {
 
 variable "profile_name" {
   default = "prometheus_profile"
+}
+
+variable "allowed_ports" {
+  description = "List of allowed ports"
+  type        = list(number)
+  default     = [22, 80, 9090, 9100]
 }

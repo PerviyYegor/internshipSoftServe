@@ -1,7 +1,0 @@
-- hosts: all
-  gather_facts: False
-
-- hosts: all
-  roles:
-  - docker
-  - prometheus

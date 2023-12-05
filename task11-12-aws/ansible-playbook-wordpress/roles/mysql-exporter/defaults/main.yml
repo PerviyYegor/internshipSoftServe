@@ -1,3 +1,0 @@
-# defaults file for mysql_exporter
-export_mysql_user: mysqlExporter
-export_mysql_password: randompassword
