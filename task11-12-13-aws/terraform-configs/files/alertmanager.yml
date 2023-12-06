@@ -8,7 +8,7 @@ route:
 receivers:
   - name: 'telepush'
     webhook_configs:
-      - url: 'https://telepush.dev/api/inlets/alertmanager/53d554'
+      - url: 'https://telepush.dev/api/inlets/alertmanager/<YOUR_TAG_HERE>'
 
 inhibit_rules:
   - source_match:
