@@ -1,0 +1,33 @@
+- name: Copy siteExample folder to home directory
+  ansible.builtin.copy:
+    src: "{{ role_path }}/files/files"
+    dest: "/home/centos/"
+    owner: centos
+    group: centos
+    mode: '0755'
+
+- name: Copy bin file to home directory
+  ansible.builtin.copy:
+    src: "{{ role_path }}/files/app"
+    dest: "/home/centos/app"
+    owner: centos
+    group: centos
+    mode: '0755'
+
+- name: Copy systemd service file of goApp
+  become: true
+  copy:
+    src: "{{ role_path }}/files/goApp.service"
+    dest: "/etc/systemd/system/goApp.service"
+
+- name: Reload systemd
+  become: true
+  systemd:
+    daemon_reload: yes
+
+- name: Enable and start Prometheus Agent service
+  become: true
+  systemd:
+    name: "goApp"
+    state: started
+    enabled: yes

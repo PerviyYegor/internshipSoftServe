@@ -1,0 +1,10 @@
+[Unit]
+Description=Go web application
+After=network.target
+[Service]
+User=centos
+Group=centos
+Type=simple
+ExecStart=/home/centos/app
+[Install]
+WantedBy=multi-user.target

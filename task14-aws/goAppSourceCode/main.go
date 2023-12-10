@@ -13,7 +13,7 @@ import (
 
 const (
 	httpPort    = ":80"
-	metricsPort = ":8080"
+	metricsPort = ":9110"
 )
 
 func main() {
