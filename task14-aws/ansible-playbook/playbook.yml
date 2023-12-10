@@ -11,3 +11,10 @@
   roles:
   - goApp
   - node-exporter
+  tasks:
+  - name: Delete go source code from role
+    file:
+      state: absent
+      path: ./roles/goApp/files/goAppSourceCode
+    delegate_to: localhost
+  
