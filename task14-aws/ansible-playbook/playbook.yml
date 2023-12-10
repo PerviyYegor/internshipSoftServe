@@ -1,5 +1,11 @@
 - hosts: all
   gather_facts: False
+  tasks:
+  - name: Copy go source code to role
+    copy:
+        src: ../goAppSourceCode
+        dest: ./roles/goApp/files
+    delegate_to: localhost
 
 - hosts: all
   roles:

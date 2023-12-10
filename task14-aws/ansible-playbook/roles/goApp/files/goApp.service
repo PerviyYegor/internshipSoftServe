@@ -2,9 +2,10 @@
 Description=Go web application
 After=network.target
 [Service]
-User=centos
-Group=centos
+User=root
+Group=root
 Type=simple
-ExecStart=/home/centos/app
+ExecStart=/home/centos/app -p /home/centos/files/index.html
+WorkingDirectory=/home/centos
 [Install]
 WantedBy=multi-user.target

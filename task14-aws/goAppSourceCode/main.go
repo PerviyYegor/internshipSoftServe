@@ -2,6 +2,7 @@ package main
 
 import (
 	"errors"
+	"flag"
 	"log"
 	"net/http"
 	"strings"
@@ -15,6 +16,8 @@ const (
 	httpPort    = ":80"
 	metricsPort = ":9110"
 )
+
+var filePath = flag.String("p", "./files/index.html", "path to index html file")
 
 func main() {
 	app := setupEcho()
@@ -70,5 +73,5 @@ func startMainServer(app *echo.Echo) {
 }
 
 func setupRoutes(app *echo.Echo) {
-	app.File("/", "files/index.html")
+	app.File("/", *filePath)
 }
