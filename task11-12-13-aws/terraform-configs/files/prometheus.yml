@@ -58,3 +58,22 @@ scrape_configs:
         replacement: '${1}:9323'
         target_label: __address__
 
+  - job_name: 'goAppNodeExporter'
+    ec2_sd_configs: *ec2config 
+    relabel_configs:
+      - source_labels: [__meta_ec2_tag_Name]
+        regex: goApp
+        action: keep
+        target_label: instance
+  - job_name: 'goAppEchoExporter'
+    ec2_sd_configs: *ec2config 
+    relabel_configs:
+      - source_labels: [__meta_ec2_tag_Name]
+        regex: goApp
+        action: keep
+        target_label: instance
+      - source_labels: [__meta_ec2_private_ip]
+        regex: '(.*)'
+        replacement: '${1}:9110'
+        target_label: __address__
+
