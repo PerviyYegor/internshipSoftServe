@@ -57,7 +57,7 @@
   systemd:
     daemon_reload: yes
 
-- name: Enable and start Prometheus Agent service
+- name: Enable and start goApp service
   become: true
   systemd:
     name: "goApp"
