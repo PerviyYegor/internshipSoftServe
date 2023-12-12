@@ -20,18 +20,17 @@ const (
 var filePath = flag.String("p", "./files/index.html", "path to index html file")
 
 func main() {
-	app := setupEcho()
+	app := echo.New()
 	customCounter := setupCustomCounter()
 	app.Use(setupPrometheusMiddleware(customCounter))
 
-	go startMetricsServer()
+	metrics := echo.New()
+	metrics.GET("/metrics", echoprometheus.NewHandler())
+
+	go startServer(metrics, metricsPort)
 
 	setupRoutes(app)
-	startMainServer(app)
-}
-
-func setupEcho() *echo.Echo {
-	return echo.New()
+	startServer(app, httpPort)
 }
 
 func setupCustomCounter() prometheus.Counter {
@@ -58,16 +57,8 @@ func setupPrometheusMiddleware(counter prometheus.Counter) echo.MiddlewareFunc {
 	})
 }
 
-func startMetricsServer() {
-	metrics := echo.New()
-	metrics.GET("/metrics", echoprometheus.NewHandler())
-	if err := metrics.Start(metricsPort); err != nil && !errors.Is(err, http.ErrServerClosed) {
-		log.Fatal(err)
-	}
-}
-
-func startMainServer(app *echo.Echo) {
-	if err := app.Start(httpPort); err != nil && !errors.Is(err, http.ErrServerClosed) {
+func startServer(app *echo.Echo, port string) {
+	if err := app.Start(port); err != nil && !errors.Is(err, http.ErrServerClosed) {
 		log.Fatal(err)
 	}
 }
