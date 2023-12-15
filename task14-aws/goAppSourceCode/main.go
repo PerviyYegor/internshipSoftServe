@@ -20,6 +20,7 @@ const (
 var filePath = flag.String("p", "./files/index.html", "path to index html file")
 
 func main() {
+	log.Println("Starting server on port", httpPort)
 	app := echo.New()
 	customCounter := setupCustomCounter()
 	app.Use(setupPrometheusMiddleware(customCounter))
@@ -27,9 +28,11 @@ func main() {
 	metrics := echo.New()
 	metrics.GET("/metrics", echoprometheus.NewHandler())
 
+	log.Println("Starting metrics server on port", metricsPort)
 	go startServer(metrics, metricsPort)
 
 	setupRoutes(app)
+	log.Println("Main server started. Listening on port", httpPort)
 	startServer(app, httpPort)
 }
 
@@ -64,5 +67,7 @@ func startServer(app *echo.Echo, port string) {
 }
 
 func setupRoutes(app *echo.Echo) {
+	log.Println("Setting up routes with file", *filePath)
 	app.File("/", *filePath)
+	log.Println("Routes set up successfully")
 }
