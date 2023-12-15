@@ -1,0 +1,45 @@
+- name: Install yum-utils
+  yum:
+    name: yum-utils
+    state: present
+
+- name: Add Docker repository
+  yum_repository:
+    name: docker-ce
+    description: Docker CE Repository
+    baseurl: https://download.docker.com/linux/centos/7/$basearch/stable
+    enabled: yes
+    gpgcheck: yes
+    gpgkey: https://download.docker.com/linux/centos/gpg
+  become: true
+
+
+- name: Install required docker software
+  yum:
+    name: "{{ item }}"
+    state: latest
+  become: true
+  with_items:
+    - docker-ce
+    - docker-ce-cli
+    - containerd.io
+    - docker-buildx-plugin
+    - docker-compose-plugin
+
+- name: Add user to docker group
+  ansible.builtin.user:
+    name: centos
+    groups: docker
+  become: true
+
+- name: Run newgrp to apply group changes
+  ansible.builtin.command:
+    cmd: newgrp docker
+  become: true
+
+- name: Enable and start Docker service
+  systemd:
+    name: docker
+    enabled: yes
+    state: started
+  become: true
