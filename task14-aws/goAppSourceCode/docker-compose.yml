@@ -1,0 +1,66 @@
+version: "3.9"
+
+services:
+  elasticsearch:
+    image: elasticsearch:7.1.0
+    volumes:
+      - ./esdata:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      - "discovery.type=single-node"
+    networks:
+      - elk
+
+  logstash:
+    build:
+      context: .
+      dockerfile: docker-setup/logstash/Dockerfile
+    ports:
+      - 9600:9600
+      - 5228:5228
+    environment:
+      LOGSTASH_PORT: 5228
+      LOGSTASH_INDEX: "test-index"
+      ELASTIC_HOST: "elasticsearch:9200"
+      ELASTIC_USERNAME: "elastic"
+      ELASTIC_PASSWORD: "elastic"
+    networks:
+      - elk
+    depends_on:
+      - elasticsearch
+    links:
+      - elasticsearch
+
+  kibana:
+    image: kibana:7.1.0
+    hostname: kibana
+    ports:
+      - "5601:5601"
+    networks:
+      - elk
+    depends_on:
+      - elasticsearch
+    links:
+      - elasticsearch
+    environment:
+      ELASTIC_HOST: "http://elasticsearch:9200"
+      ELASTIC_USERNAME: "elastic"
+      ELASTIC_PASSWORD: "elastic"
+
+  go-app:
+    container_name: go-app
+    build:
+      context: .
+      dockerfile: docker-setup/go-logger/Dockerfile
+    networks:
+      - elk
+
+networks:
+  elk:
+    driver: bridge
+
+volumes:
+  esdata:
+    driver: local
