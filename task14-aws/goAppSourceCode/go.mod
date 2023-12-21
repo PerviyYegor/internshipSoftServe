@@ -8,6 +8,8 @@ require (
 	github.com/prometheus/client_golang v1.17.0
 )
 
+require github.com/ic2hrmk/promtail v0.0.4 // indirect
+
 require (
 	github.com/KaranJagtiani/go-logstash v1.0.2
 	github.com/beorn7/perks v1.0.1 // indirect
@@ -20,6 +22,7 @@ require (
 	github.com/dustin/go-humanize v1.0.0 // indirect
 	github.com/edsrzf/mmap-go v1.0.0 // indirect
 	github.com/fatih/color v1.9.0 // indirect
+	github.com/go-chi/chi/v5 v5.0.11
 	github.com/go-kit/kit v0.10.0 // indirect
 	github.com/go-logfmt/logfmt v0.5.1 // indirect
 	github.com/gogo/googleapis v1.1.0 // indirect
@@ -31,6 +34,7 @@ require (
 	github.com/gorilla/mux v1.7.3 // indirect
 	github.com/grafana/loki v1.6.1 // indirect
 	github.com/grpc-ecosystem/go-grpc-middleware v1.1.0 // indirect
+	github.com/ic2hrmk/lokigrus v0.0.4
 	github.com/jpillora/backoff v1.0.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/labstack/gommon v0.4.0 // indirect

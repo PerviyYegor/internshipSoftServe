@@ -24,5 +24,7 @@ COPY --from=build-stage /docker-goApp ./docker-goApp
 EXPOSE 9110 80
 
 USER root:root
+ARG LOKI_URL
+ENV LOKI_URL=$LOKI_URL
 
-ENTRYPOINT ["./docker-goApp", "-p", "./files/index.html"]
+ENTRYPOINT ./docker-goApp -p ./files/index.html -l $LOKI_URL

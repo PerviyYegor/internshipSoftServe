@@ -7,7 +7,7 @@ import (
 	"os"
 	"strings"
 
-	logstash_logger "github.com/KaranJagtiani/go-logstash"
+	"github.com/ic2hrmk/lokigrus"
 	"github.com/labstack/echo-contrib/echoprometheus"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -16,77 +16,64 @@ import (
 )
 
 const (
-	httpPort       = ":80"
-	metricsPort    = ":9110"
-	logMetricsPort = ":8081"
+	httpPort    = ":80"
+	metricsPort = ":9110"
 )
-
-// AppConfig структура для зберігання конфігурації додатку
-type AppConfig struct {
-	AppPort        string
-	MetricsPort    string
-	LogMetricsPort string
-	FilePath       string
-	CustomLogger   *logrus.Logger
-}
 
 func main() {
 	filePath := flag.String("p", "./files/index.html", "path to index html file")
+	lokiURL := flag.String("l", "", "address of loki server")
 	flag.Parse()
 
-	config := AppConfig{
-		AppPort:        httpPort,
-		MetricsPort:    metricsPort,
-		LogMetricsPort: logMetricsPort,
-		FilePath:       *filePath,
-		CustomLogger:   setupLogger(),
+	logger := setupLogger()
+
+	if *lokiURL != "" {
+		logger.Info("Trying to start push logs to loki server")
+		initLokiSupport(logger, *lokiURL, map[string]string{"app": "go-app"})
+	} else {
+		logger.Warning("Loki URL didn't provide. You can do it with -l flag")
 	}
 
-	startApp(config)
-}
-
-func startApp(config AppConfig) {
-	config.CustomLogger.Info("Starting server on port", config.AppPort)
-	app := setupEchoApp(config)
+	logger.Info("Starting server on port", httpPort)
+	app := setupEchoApp(logger, *filePath)
 	metrics := echo.New()
 	metrics.GET("/metrics", echoprometheus.NewHandler())
-	config.CustomLogger.Info("Starting metrics server on port", config.MetricsPort)
-	go startServer(metrics, config.MetricsPort)
+	logger.Info("Starting metrics server on port", metricsPort)
+	go startServer(metrics, metricsPort)
 
-	logger := logstash_logger.Init("logstash", 5228, "tcp", 5)
-
-	payload := map[string]interface{}{
-		"message": "TEST_MSG",
-		"error":   false,
-	}
-
-	logger.Log(payload)   // Generic log
-	logger.Info(payload)  // Adds "severity": "INFO"
-	logger.Debug(payload) // Adds "severity": "DEBUG"
-	logger.Warn(payload)  // Adds "severity": "WARN"
-	logger.Error(payload) // Adds "severity": "ERROR"
-
-	setupRoutes(app, config)
-	config.CustomLogger.Info("Main server started. Listening on port", config.AppPort)
-	startServer(app, config.AppPort)
+	setupRoutes(app, logger, *filePath)
+	logger.Info("Main server started. Listening on port", httpPort)
+	startServer(app, httpPort)
 }
 
-func setupEchoApp(config AppConfig) *echo.Echo {
+func initLokiSupport(logger *logrus.Logger, lokiAddress string, appLabels map[string]string) error {
+	promtailHook, err := lokigrus.NewPromtailHook(lokiAddress, appLabels)
+	if err != nil {
+		logger.Fatal(err)
+		return err
+	}
+
+	logger.AddHook(promtailHook)
+
+	return nil
+}
+
+func setupEchoApp(logger *logrus.Logger, filePath string) *echo.Echo {
 	app := echo.New()
 	app.Use(middleware.Logger())
 	app.Use(middleware.RequestLoggerWithConfig(middleware.RequestLoggerConfig{
 		LogURI:    true,
 		LogStatus: true,
 		LogValuesFunc: func(c echo.Context, values middleware.RequestLoggerValues) error {
-			config.CustomLogger.WithFields(logrus.Fields{
+			logger.WithFields(logrus.Fields{
 				"URI":    values.URI,
 				"status": values.Status,
 			}).Info("request")
 			return nil
 		},
 	}))
-	customCounter := setupCustomCounter(config)
-	app.Use(setupPrometheusMiddleware(customCounter, config))
+	customCounter := setupCustomCounter(logger)
+	app.Use(setupPrometheusMiddleware(customCounter, logger))
 	return app
 }
 
@@ -97,7 +84,7 @@ func setupLogger() *logrus.Logger {
 	return logger
 }
 
-func setupCustomCounter(config AppConfig) prometheus.Counter {
+func setupCustomCounter(logger *logrus.Logger) prometheus.Counter {
 	counter := prometheus.NewCounter(
 		prometheus.CounterOpts{
 			Name: "custom_requests_total",
@@ -105,12 +92,12 @@ func setupCustomCounter(config AppConfig) prometheus.Counter {
 		},
 	)
 	if err := prometheus.Register(counter); err != nil {
-		config.CustomLogger.Fatal(err)
+		logger.Fatal(err)
 	}
 	return counter
 }
 
-func setupPrometheusMiddleware(counter prometheus.Counter, config AppConfig) echo.MiddlewareFunc {
+func setupPrometheusMiddleware(counter prometheus.Counter, logger *logrus.Logger) echo.MiddlewareFunc {
 	return echoprometheus.NewMiddlewareWithConfig(echoprometheus.MiddlewareConfig{
 		AfterNext: func(c echo.Context, err error) {
 			counter.Inc()
@@ -127,8 +114,8 @@ func startServer(app *echo.Echo, port string) {
 	}
 }
 
-func setupRoutes(app *echo.Echo, config AppConfig) {
-	config.CustomLogger.Info("Setting up routes with file", config.FilePath)
-	app.File("/", config.FilePath)
-	config.CustomLogger.Info("Routes set up successfully")
+func setupRoutes(app *echo.Echo, logger *logrus.Logger, filePath string) {
+	logger.Info("Setting up routes with file", filePath)
+	app.File("/", filePath)
+	logger.Info("Routes set up successfully")
 }
