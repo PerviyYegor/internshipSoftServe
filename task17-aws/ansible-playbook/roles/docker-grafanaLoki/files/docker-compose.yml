@@ -3,25 +3,11 @@ version: "3.9"
 services:
   loki:
     image: grafana/loki:latest
+    restart: unless-stopped
     networks:
-      - go-app
+      - grafana
     ports:
       - "3100:3100"
-
-  go-app:
-    container_name: go-app
-    build:
-      context: .
-      dockerfile: docker-setup/go-app/Dockerfile
-    networks:
-      - go-app
-    depends_on:
-      - loki
-    ports:
-      - 80:80
-      - 9110:9110
-    environment:
-      LOKI_URL: "http://loki:3100"
 
   grafana:
     image: grafana/grafana:latest
@@ -34,8 +20,8 @@ services:
     volumes:
       - ./grafana/data:/var/lib/grafana
     networks:
-      - go-app
+      - grafana
 
 networks:
-  go-app:
+  grafana:
     driver: bridge

@@ -10,11 +10,11 @@
 - name: Build Go app docker container
   become: true
   command: 
-    cmd:  docker build -t go-app-docker:latest -f Dockerfile.multistage .
+    cmd:  docker build -t go-app-docker:latest -f Dockerfile .
     chdir: /home/centos/goAppSourceCode
 
 - name: Run Go app docker container
   become: true
   command: 
-    cmd: docker run --name go-app -p 80:80 -p 9110:9110 --restart=always -d go-app-docker
+    cmd: docker run --name go-app -p 80:80 -p 9110:9110 --restart=always -e LOKI_URL={{ loki_url }} -d go-app-docker
     chdir: /home/centos/goAppSourceCode

@@ -1,0 +1,2 @@
+#- include_tasks: installDocker.yml
+- include_tasks: startGrafanaLoki.yml
