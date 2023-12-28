@@ -1,20 +1,23 @@
-- hosts: all
+- hosts: localhost
   gather_facts: False
+  vars:
+    ansible_python_interpreter: /usr/bin/python3 
   tasks:
-  - name: Copy go source code to role
-    copy:
-        src: ../goAppSourceCode
-        dest: ./roles/goApp/files
-    delegate_to: localhost
+    - name: Copy go source code to role
+      copy:
+          src: ../goAppSourceCode
+          dest: ./roles/goApp/files
+      delegate_to: localhost
 
-- hosts: all
+- hosts: ec2_goApp
+  vars:
+    loki_url: "{{ hostvars[groups['ec2_loki_grafana'][0]]['network_interfaces'][0]['private_ip_address'] }}:3100"
   roles:
-  - goApp
-  - node-exporter
+    - goApp
+    - node-exporter
   tasks:
-  - name: Delete go source code from role
-    file:
-      state: absent
-      path: ./roles/goApp/files/goAppSourceCode
-    delegate_to: localhost
-  
+    - name: Delete go source code from role
+      file:
+        state: absent
+        path: ./roles/goApp/files/goAppSourceCode
+      delegate_to: localhost

@@ -13,8 +13,26 @@
     cmd:  docker build -t go-app-docker:latest -f Dockerfile .
     chdir: /home/centos/goAppSourceCode
 
+- name: Stop the Docker container
+  docker_container:
+    name: go-app
+    state: stopped
+  become: true
+  ignore_errors: true
+
+- name: Remove the Docker container
+  docker_container:
+    name: go-app
+    state: absent
+    force_kill: yes
+  become: true
+  ignore_errors: true
+
+- name: smsms
+  debug: var=loki_url
+
 - name: Run Go app docker container
   become: true
   command: 
-    cmd: docker run --name go-app -p 80:80 -p 9110:9110 --restart=always -e LOKI_URL={{ loki_url }} -d go-app-docker
+    cmd: docker run --name go-app -p 80:80 -p 9110:9110 --restart=always -e LOKI_URL='{{ loki_url }}' -d go-app-docker
     chdir: /home/centos/goAppSourceCode
