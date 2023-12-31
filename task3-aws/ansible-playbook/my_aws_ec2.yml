@@ -3,5 +3,11 @@ regions:
 - us-east-1
 filters:
   tag:Name:
-  - 'wordpress'
+    - 'wordpress'
+    - 'loki-grafana'
   instance-state-name : running
+keyed_groups:
+  - key: tags.Name
+    prefix: ec2
+    separator: "_"
+

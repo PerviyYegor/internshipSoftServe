@@ -1,0 +1,78 @@
+- name: Create promtail directory
+  file:
+    path: ~/logging
+    state: directory
+    mode: '0755'
+
+- name: Install required packages
+  yum:
+    name: "{{ item }}"
+    state: latest
+  become: true
+  with_items:
+    - wget
+    - unzip
+
+- name: Download promtail binary
+  shell: |
+    cd ~/logging
+    curl -s https://api.github.com/repos/grafana/loki/releases/latest |
+    grep browser_download_url |
+    cut -d '"' -f 4 |
+    grep promtail-linux-amd64.zip |
+    wget -i -
+  args:
+    creates: ~/logging/promtail-linux-amd64.zip
+
+- name: Extract Promtail binary
+  unarchive:
+    src: ~/logging/promtail-linux-amd64.zip
+    dest: ~/logging
+    remote_src: yes
+    creates: ~/logging/promtail-linux-amd64
+    
+
+- name: Move Promtail binary to /usr/local/bin
+  command: sudo mv ~/logging/promtail-linux-amd64 /usr/local/bin/promtail
+
+
+- name: Transfer of promtail conf to machine
+  become: true
+  template:
+    src: templates/promtail-local-config.yaml.j2
+    dest: /etc/promtail-local-config.yaml
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Transfer of promtail service conf to machine
+  become: true
+  template:
+    src: templates/promtail.service.j2
+    dest: /etc/systemd/system/promtail.service
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Disable SELinux
+  become: true
+  replace:
+    path: /etc/selinux/config
+    regexp: 'SELINUX=permissive'
+    replace: 'SELINUX=disable'
+
+- name: Temporarily set SELinux to permissive
+  become: true
+  command: setenforce 0
+
+- name: Reload systemd daemon
+  become: true
+  systemd:
+    daemon_reload: yes
+
+- name: Configure and start Promtail service
+  become: true
+  systemd:
+    name: promtail.service
+    enabled: yes
+    state: started

@@ -38,5 +38,5 @@ variable "instance_tag" {
 variable "allowed_ports" {
   description = "List of allowed ports"
   type        = list(number)
-  default     = [22, 80, 9100, 9104]
+  default     = [22, 80, 9100, 9104, 9080]
 }

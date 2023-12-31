@@ -1,11 +1,17 @@
-- hosts: all
+- hosts: localhost
   gather_facts: False
+  vars:
+    ansible_python_interpreter: /usr/bin/python3 
 
-- hosts: all
+- hosts: ec2_wordpress
+  vars:
+    loki_url: "{{ hostvars[groups['ec2_loki_grafana'][0]]['network_interfaces'][0]['private_ip_address'] }}:3100"
+    hostname: ec2_wordpress
   roles:
-  - server
-  - php
-  - mysql
-  - wordpress
-  - node-exporter
-  - mysql-exporter
+  - promtail
+  #- server
+  #- php
+  #- mysql
+  #- wordpress
+  #- node-exporter
+  #- mysql-exporter
