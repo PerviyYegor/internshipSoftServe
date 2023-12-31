@@ -9,9 +9,9 @@
     hostname: ec2_wordpress
   roles:
   - promtail
-  #- server
-  #- php
-  #- mysql
-  #- wordpress
-  #- node-exporter
-  #- mysql-exporter
+  - server
+  - php
+  - mysql
+  - wordpress
+  - node-exporter
+  - mysql-exporter
