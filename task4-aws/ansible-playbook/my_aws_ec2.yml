@@ -4,4 +4,9 @@ regions:
 filters:
   tag:Name:
   - 'docker'
+  - 'loki-grafana'
   instance-state-name : running
+keyed_groups:
+  - key: tags.Name
+    prefix: ec2
+    separator: "_"

@@ -1,12 +1,12 @@
-- name: Copy main.tf folder to home directory
-  ansible.builtin.copy:
-    src: "{{ role_path }}/files/main.tf"
+- name: Transfer main.tf file to home directory
+  template:
+    src: "{{ role_path }}/templates/main.tf.j2"
     dest: "/home/centos/main.tf"
     owner: centos
     group: centos
     mode: '0644'
 
-- name: Copy siteExample folder to home directory
+- name: Copy siteExample file to home directory
   ansible.builtin.copy:
     src: "{{ role_path }}/files/siteExample"
     dest: "/home/centos/"

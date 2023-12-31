@@ -1,7 +1,11 @@
-- hosts: all
+- hosts: localhost
   gather_facts: False
+  vars:
+    ansible_python_interpreter: /usr/bin/python3 
 
-- hosts: all
+- hosts: ec2_docker
+  vars:
+      loki_url: "{{ hostvars[groups['ec2_loki_grafana'][0]]['network_interfaces'][0]['private_ip_address'] }}:3100"
   roles:
   - docker
   - prometheus

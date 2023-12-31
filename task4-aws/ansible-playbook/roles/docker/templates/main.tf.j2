@@ -29,4 +29,11 @@ resource "docker_container" "apache" {
     container_path = "/usr/local/apache2/htdocs"
     host_path      = "/home/centos/siteExample/"
   }
+
+  log_driver = "loki"
+  log_opts   = {
+    "loki-url"      = "http://{{ loki_url }}/loki/api/v1/push",
+    "loki-retries"  = "5",
+    "loki-batch-size" = "400",
+  }
 }
