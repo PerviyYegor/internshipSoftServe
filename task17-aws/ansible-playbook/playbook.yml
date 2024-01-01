@@ -1,7 +1,9 @@
 - hosts: all
   gather_facts: False
 
-- hosts: all
+- hosts: ec2_loki_grafana
+  vars:
+      prometheus_url: "{{ hostvars[groups['ec2_prometheus'][0]]['network_interfaces'][0]['private_ip_address'] }}:9090"
   roles:
   - docker-grafanaLoki
 

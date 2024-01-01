@@ -61,11 +61,20 @@ func initLokiSupport(logger *logrus.Logger, lokiAddress string, appLabels map[st
 func setupEchoApp(logger *logrus.Logger, filePath string) *echo.Echo {
 	app := echo.New()
 	app.Use(middleware.Logger())
+
+	app.Use(func(next echo.HandlerFunc) echo.HandlerFunc {
+		return func(c echo.Context) error {
+			c.Set("realIP", c.Request().RemoteAddr)
+			return next(c)
+		}
+	})
 	app.Use(middleware.RequestLoggerWithConfig(middleware.RequestLoggerConfig{
-		LogURI:    true,
-		LogStatus: true,
+		LogURI:      true,
+		LogStatus:   true,
+		LogRemoteIP: true,
 		LogValuesFunc: func(c echo.Context, values middleware.RequestLoggerValues) error {
 			logger.WithFields(logrus.Fields{
+				"IP":     values.RemoteIP,
 				"URI":    values.URI,
 				"status": values.Status,
 			}).Info("request")

@@ -4,4 +4,9 @@ regions:
 filters:
   tag:Name:
   - 'loki-grafana'
+  - 'prometheus'
   instance-state-name : running
+keyed_groups:
+  - key: tags.Name
+    prefix: ec2
+    separator: "_"

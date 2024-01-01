@@ -18,7 +18,8 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./grafana/data:/var/lib/grafana
+      - ~/provisioning/:/usr/share/grafana/conf/provisioning/datasources/
+      
     networks:
       - grafana
 
