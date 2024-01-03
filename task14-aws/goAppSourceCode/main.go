@@ -24,7 +24,7 @@ var (
 	dataFilePath     = flag.String("json", "./files/data.json", "path to index json file")
 	filePath         = flag.String("html", "./files/index.html", "path to output html file")
 	templateFilePath = flag.String("htmlTemplate", "./templates/template.html", "path to template html file")
-	lokiURL          = flag.String("l", "", "address of loki server")
+	lokiURL          = flag.String("l", " ", "address of loki server")
 )
 
 func main() {
@@ -32,7 +32,7 @@ func main() {
 
 	logger := setupLogger()
 
-	if *lokiURL != "" {
+	if *lokiURL != " " && *lokiURL != "null" {
 		logger.Info("Trying to start push logs to loki server")
 		initLokiSupport(logger, *lokiURL, map[string]string{"app": "go-app"})
 	} else {

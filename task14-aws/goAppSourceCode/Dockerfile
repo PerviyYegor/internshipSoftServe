@@ -17,15 +17,15 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o /docker-goApp
 FROM  alpine:latest AS build-release-stage
 
 WORKDIR /go-app
-COPY files ./files/
-COPY checkAPI ./checkAPI/
+COPY templates ./templates/
+RUN mkdir ./files
 
 COPY --from=build-stage /docker-goApp ./docker-goApp
 
 EXPOSE 9110 80
 
 USER root:root
-ARG LOKI_URL
-ENV LOKI_URL=$LOKI_URL
+ARG LOKI_URL=null
+ENV LOKI_URL=${LOKI_URL}
 
 ENTRYPOINT ./docker-goApp -html ./files/index.html -l $LOKI_URL
