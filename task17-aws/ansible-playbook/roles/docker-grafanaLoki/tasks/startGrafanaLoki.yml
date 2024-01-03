@@ -8,11 +8,11 @@
     path: ~/provisioning/
     state: directory
 
-- name: Copy Grafana conf file
-  template:
-    src: "{{ role_path }}/templates/datasource.yaml.j2"
-    dest: ~/provisioning/datasource.yaml
-
+#- name: Copy Grafana conf file
+#  template:
+#    src: "{{ role_path }}/templates/datasource.yaml.j2"
+#    dest: ~/provisioning/datasource.yaml
+#
 - name: Start Loki with Docker Compose
   become_user: centos
   shell: |
