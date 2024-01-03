@@ -18,6 +18,7 @@ FROM  alpine:latest AS build-release-stage
 
 WORKDIR /go-app
 COPY files ./files/
+COPY checkAPI ./checkAPI/
 
 COPY --from=build-stage /docker-goApp ./docker-goApp
 
@@ -27,4 +28,4 @@ USER root:root
 ARG LOKI_URL
 ENV LOKI_URL=$LOKI_URL
 
-ENTRYPOINT ./docker-goApp -p ./files/index.html -l $LOKI_URL
+ENTRYPOINT ./docker-goApp -html ./files/index.html -l $LOKI_URL
