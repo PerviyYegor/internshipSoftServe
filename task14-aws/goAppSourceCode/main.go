@@ -5,7 +5,6 @@ import (
 	"flag"
 	"net/http"
 	"os"
-	"os/exec"
 	"strings"
 
 	"github.com/ic2hrmk/lokigrus"
@@ -24,7 +23,7 @@ const (
 var (
 	dataFilePath     = flag.String("json", "./files/data.json", "path to index json file")
 	filePath         = flag.String("html", "./files/index.html", "path to output html file")
-	templateFilePath = flag.String("htmlTemplate", "./checkAPI/template.html", "path to template html file")
+	templateFilePath = flag.String("htmlTemplate", "./templates/template.html", "path to template html file")
 	lokiURL          = flag.String("l", "", "address of loki server")
 )
 
@@ -51,22 +50,11 @@ func main() {
 	logger.Info("Main server started. Listening on port", httpPort)
 
 	go func() {
-		err := callCheckAPI(logger)
-		if err != nil {
-			logger.Error("Error calling CheckAPI:", err)
-		}
+		logger.Info("Calling CheckAPI...")
+		checkAPI(logger, *dataFilePath, *templateFilePath, *filePath)
 	}()
 
 	startServer(app, httpPort)
-}
-
-func callCheckAPI(logger *logrus.Logger) error {
-	cmd := exec.Command("go", "run", "./checkAPI/main.go", "-json", *dataFilePath, "-html", *filePath, "-htmlTemplate", *templateFilePath)
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-
-	logger.Info("Calling CheckAPI...")
-	return cmd.Run()
 }
 
 func initLokiSupport(logger *logrus.Logger, lokiAddress string, appLabels map[string]string) error {
