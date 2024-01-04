@@ -12,6 +12,7 @@
   become: true
   vars:
     login_path: "{{ wp_mysql_user }}"
+  ignore_errors: true
 
 - name: Create mysql user
   mysql_user:
@@ -21,6 +22,8 @@
   become: true
   vars:
     login_path: "{{ wp_mysql_user }}"
+  ignore_errors: true
+
 
 - name: Set MySQL/MariaDB root password
   become: true

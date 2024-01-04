@@ -15,6 +15,7 @@
   become: true
 
 - name: Execute SQL statement create user
+  ignore_errors: true
   community.mysql.mysql_query:
     login_user: "root"
     login_password: "{{ mysql_root_password }}"

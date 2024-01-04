@@ -45,6 +45,7 @@
   become: true
 
 - name: Install loki driver for docker
+  when: loki_url is defined
   ansible.builtin.shell:
     cmd: docker plugin install grafana/loki-docker-driver:latest --alias loki --grant-all-permissions
   ignore_errors: true

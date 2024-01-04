@@ -8,7 +8,8 @@
     loki_url: "{{ hostvars[groups['ec2_loki_grafana'][0]]['network_interfaces'][0]['private_ip_address'] }}:3100"
     hostname: ec2_wordpress
   roles:
-  - promtail
+  - role: promtail
+    when: loki_url is defined
   - server
   - php
   - mysql

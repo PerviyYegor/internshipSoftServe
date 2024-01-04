@@ -1,4 +1,14 @@
-- name: Transfer main.tf file to home directory
+- name: Transfer main-loki.tf.j2 template file to home directory with loki connect
+  when: loki_url is defined
+  template:
+    src: "{{ role_path }}/templates/main-loki.tf.j2"
+    dest: "/home/centos/main.tf"
+    owner: centos
+    group: centos
+    mode: '0644'
+
+- name: Transfer main-loki.tf.j2 template file to home directory
+  when: loki_url is undefined
   template:
     src: "{{ role_path }}/templates/main.tf.j2"
     dest: "/home/centos/main.tf"
