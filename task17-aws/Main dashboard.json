@@ -1,4 +1,23 @@
 {
+  "__inputs": [
+    {
+      "name": "DS_PROMETHEUS_ID",
+      "label": "Prometheus Data Source",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "prometheus",
+      "pluginName": "Prometheus"
+    },
+    {
+      "name": "DS_LOKI_ID",
+      "label": "Loki Data Source",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "loki",
+      "pluginName": "Loki"
+    }
+  ],
+
   "annotations": {
     "list": [
       {
@@ -38,7 +57,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "b1fdd1a2-f100-468e-83c0-475beda73a89"
+        "uid": "${DS_PROMETHEUS_ID}"
       },
       "description": "Busy state of all CPU cores together",
       "fieldConfig": {
@@ -110,7 +129,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "b1fdd1a2-f100-468e-83c0-475beda73a89"
+            "uid": "${DS_PROMETHEUS_ID}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -130,7 +149,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "b1fdd1a2-f100-468e-83c0-475beda73a89"
+        "uid": "${DS_PROMETHEUS_ID}"
       },
       "description": "Non available RAM memory",
       "fieldConfig": {
@@ -192,7 +211,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "b1fdd1a2-f100-468e-83c0-475beda73a89"
+            "uid": "${DS_PROMETHEUS_ID}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -208,7 +227,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "b1fdd1a2-f100-468e-83c0-475beda73a89"
+            "uid": "${DS_PROMETHEUS_ID}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -228,7 +247,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "e97a31c9-756e-4929-ba70-8a67b84444e1"
+        "uid": "${DS_LOKI_ID}"
       },
       "gridPos": {
         "h": 6,
@@ -251,7 +270,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "e97a31c9-756e-4929-ba70-8a67b84444e1"
+            "uid": "${DS_LOKI_ID}"
           },
           "editorMode": "builder",
           "expr": "{app=\"go-app\"} |= ``",
@@ -265,7 +284,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "b1fdd1a2-f100-468e-83c0-475beda73a89"
+        "uid": "${DS_PROMETHEUS_ID}"
       },
       "description": "Total number of CPU cores",
       "fieldConfig": {
@@ -330,7 +349,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "b1fdd1a2-f100-468e-83c0-475beda73a89"
+            "uid": "${DS_PROMETHEUS_ID}"
           },
           "editorMode": "code",
           "expr": "count(count(node_cpu_seconds_total{job=\"goAppNodeExporter\"}) by (cpu))",
@@ -345,7 +364,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "b1fdd1a2-f100-468e-83c0-475beda73a89"
+        "uid": "${DS_PROMETHEUS_ID}"
       },
       "description": "System uptime",
       "fieldConfig": {
@@ -412,7 +431,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "b1fdd1a2-f100-468e-83c0-475beda73a89"
+            "uid": "${DS_PROMETHEUS_ID}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -430,7 +449,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "b1fdd1a2-f100-468e-83c0-475beda73a89"
+        "uid": "${DS_PROMETHEUS_ID}"
       },
       "description": "Busy state of all CPU cores together (5 min average)",
       "fieldConfig": {
@@ -501,7 +520,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "b1fdd1a2-f100-468e-83c0-475beda73a89"
+            "uid": "${DS_PROMETHEUS_ID}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -521,7 +540,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "b1fdd1a2-f100-468e-83c0-475beda73a89"
+        "uid": "${DS_PROMETHEUS_ID}"
       },
       "description": "Used Root FS",
       "fieldConfig": {
@@ -592,7 +611,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "b1fdd1a2-f100-468e-83c0-475beda73a89"
+            "uid": "${DS_PROMETHEUS_ID}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -611,7 +630,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "b1fdd1a2-f100-468e-83c0-475beda73a89"
+        "uid": "${DS_PROMETHEUS_ID}"
       },
       "fieldConfig": {
         "defaults": {
@@ -691,7 +710,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "b1fdd1a2-f100-468e-83c0-475beda73a89"
+            "uid": "${DS_PROMETHEUS_ID}"
           },
           "disableTextWrap": false,
           "editorMode": "code",
@@ -723,7 +742,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "b1fdd1a2-f100-468e-83c0-475beda73a89"
+        "uid": "${DS_PROMETHEUS_ID}"
       },
       "description": "Busy state of all CPU cores together",
       "fieldConfig": {
@@ -795,7 +814,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "b1fdd1a2-f100-468e-83c0-475beda73a89"
+            "uid": "${DS_PROMETHEUS_ID}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -815,7 +834,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "b1fdd1a2-f100-468e-83c0-475beda73a89"
+        "uid": "${DS_PROMETHEUS_ID}"
       },
       "description": "Non available RAM memory",
       "fieldConfig": {
@@ -877,7 +896,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "b1fdd1a2-f100-468e-83c0-475beda73a89"
+            "uid": "${DS_PROMETHEUS_ID}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -893,7 +912,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "b1fdd1a2-f100-468e-83c0-475beda73a89"
+            "uid": "${DS_PROMETHEUS_ID}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -913,7 +932,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "e97a31c9-756e-4929-ba70-8a67b84444e1"
+        "uid": "${DS_LOKI_ID}"
       },
       "gridPos": {
         "h": 5,
@@ -936,7 +955,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "e97a31c9-756e-4929-ba70-8a67b84444e1"
+            "uid": "${DS_LOKI_ID}"
           },
           "editorMode": "builder",
           "expr": "{container_name=\"apache\"} |= ``",
@@ -950,7 +969,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "b1fdd1a2-f100-468e-83c0-475beda73a89"
+        "uid": "${DS_PROMETHEUS_ID}"
       },
       "description": "Total number of CPU cores",
       "fieldConfig": {
@@ -1015,7 +1034,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "b1fdd1a2-f100-468e-83c0-475beda73a89"
+            "uid": "${DS_PROMETHEUS_ID}"
           },
           "editorMode": "code",
           "expr": "count(count(node_cpu_seconds_total{job=\"dockerNodeExporter\"}) by (cpu))",
@@ -1030,7 +1049,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "b1fdd1a2-f100-468e-83c0-475beda73a89"
+        "uid": "${DS_PROMETHEUS_ID}"
       },
       "description": "System uptime",
       "fieldConfig": {
@@ -1097,7 +1116,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "b1fdd1a2-f100-468e-83c0-475beda73a89"
+            "uid": "${DS_PROMETHEUS_ID}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -1115,7 +1134,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "b1fdd1a2-f100-468e-83c0-475beda73a89"
+        "uid": "${DS_PROMETHEUS_ID}"
       },
       "description": "Busy state of all CPU cores together (5 min average)",
       "fieldConfig": {
@@ -1186,7 +1205,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "b1fdd1a2-f100-468e-83c0-475beda73a89"
+            "uid": "${DS_PROMETHEUS_ID}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -1206,7 +1225,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "b1fdd1a2-f100-468e-83c0-475beda73a89"
+        "uid": "${DS_PROMETHEUS_ID}"
       },
       "description": "Used Root FS",
       "fieldConfig": {
@@ -1277,7 +1296,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "b1fdd1a2-f100-468e-83c0-475beda73a89"
+            "uid": "${DS_PROMETHEUS_ID}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -1309,7 +1328,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "b1fdd1a2-f100-468e-83c0-475beda73a89"
+        "uid": "${DS_PROMETHEUS_ID}"
       },
       "description": "Busy state of all CPU cores together",
       "fieldConfig": {
@@ -1381,7 +1400,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "b1fdd1a2-f100-468e-83c0-475beda73a89"
+            "uid": "${DS_PROMETHEUS_ID}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -1401,7 +1420,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "b1fdd1a2-f100-468e-83c0-475beda73a89"
+        "uid": "${DS_PROMETHEUS_ID}"
       },
       "description": "Non available RAM memory",
       "fieldConfig": {
@@ -1463,7 +1482,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "b1fdd1a2-f100-468e-83c0-475beda73a89"
+            "uid": "${DS_PROMETHEUS_ID}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -1479,7 +1498,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "b1fdd1a2-f100-468e-83c0-475beda73a89"
+            "uid": "${DS_PROMETHEUS_ID}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -1499,7 +1518,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "b1fdd1a2-f100-468e-83c0-475beda73a89"
+        "uid": "${DS_PROMETHEUS_ID}"
       },
       "description": "Basic network info per interface",
       "fieldConfig": {
@@ -1941,7 +1960,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "b1fdd1a2-f100-468e-83c0-475beda73a89"
+            "uid": "${DS_PROMETHEUS_ID}"
           },
           "editorMode": "code",
           "expr": "irate(node_network_receive_bytes_total{job=\"wordpressNodeExporter\"}[$__rate_interval])*8",
@@ -1955,7 +1974,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "b1fdd1a2-f100-468e-83c0-475beda73a89"
+            "uid": "${DS_PROMETHEUS_ID}"
           },
           "expr": "irate(node_network_transmit_bytes_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])*8",
           "format": "time_series",
@@ -1971,7 +1990,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "b1fdd1a2-f100-468e-83c0-475beda73a89"
+        "uid": "${DS_PROMETHEUS_ID}"
       },
       "description": "Total number of CPU cores",
       "fieldConfig": {
@@ -2035,7 +2054,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "b1fdd1a2-f100-468e-83c0-475beda73a89"
+            "uid": "${DS_PROMETHEUS_ID}"
           },
           "editorMode": "code",
           "expr": "count(count(node_cpu_seconds_total{job=\"wordpressNodeExporter\"}) by (cpu))",
@@ -2050,7 +2069,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "b1fdd1a2-f100-468e-83c0-475beda73a89"
+        "uid": "${DS_PROMETHEUS_ID}"
       },
       "description": "System uptime",
       "fieldConfig": {
@@ -2116,7 +2135,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "b1fdd1a2-f100-468e-83c0-475beda73a89"
+            "uid": "${DS_PROMETHEUS_ID}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -2134,7 +2153,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "e97a31c9-756e-4929-ba70-8a67b84444e1"
+        "uid": "${DS_LOKI_ID}"
       },
       "gridPos": {
         "h": 4,
@@ -2157,7 +2176,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "e97a31c9-756e-4929-ba70-8a67b84444e1"
+            "uid": "${DS_LOKI_ID}"
           },
           "editorMode": "builder",
           "expr": "{job=\"ec2_wordpress_httpd_logs\", filename=\"/var/log/httpd/access_log\"}",
@@ -2171,7 +2190,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "b1fdd1a2-f100-468e-83c0-475beda73a89"
+        "uid": "${DS_PROMETHEUS_ID}"
       },
       "description": "Busy state of all CPU cores together (5 min average)",
       "fieldConfig": {
@@ -2241,7 +2260,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "b1fdd1a2-f100-468e-83c0-475beda73a89"
+            "uid": "${DS_PROMETHEUS_ID}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -2261,7 +2280,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "b1fdd1a2-f100-468e-83c0-475beda73a89"
+        "uid": "${DS_PROMETHEUS_ID}"
       },
       "description": "Used Root FS",
       "fieldConfig": {
@@ -2331,7 +2350,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "b1fdd1a2-f100-468e-83c0-475beda73a89"
+            "uid": "${DS_PROMETHEUS_ID}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -2350,7 +2369,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "e97a31c9-756e-4929-ba70-8a67b84444e1"
+        "uid": "${DS_LOKI_ID}"
       },
       "gridPos": {
         "h": 4,
@@ -2373,7 +2392,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "e97a31c9-756e-4929-ba70-8a67b84444e1"
+            "uid": "${DS_LOKI_ID}"
           },
           "editorMode": "builder",
           "expr": "{job=\"ec2_wordpress_mariadb_logs\"} |= ``",
