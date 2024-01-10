@@ -18,6 +18,12 @@ resource "aws_lambda_function" "health_check_lambda" {
   role = aws_iam_role.lambda_role.arn
 
   source_code_hash = filebase64(data.archive_file.lambda.output_path)
+
+  environment {
+    variables = {
+      S3_BUCKET_NAME = aws_s3_bucket.health_check_bucket.bucket
+    }
+  }
 }
 
 resource "aws_s3_bucket" "health_check_bucket" {
