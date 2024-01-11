@@ -1,15 +1,11 @@
-provider "aws" {
-  region = "us-east-1"
-}
-
 data "archive_file" "lambda" {
   type        = "zip"
-  source_file = "health_check.py"
-  output_path = "health_check.zip"
+  source_file = var.scriptPath
+  output_path = var.archive_path
 }
 
 resource "aws_lambda_function" "health_check_lambda" {
-  function_name = "healthCheckLambda"
+  function_name = var.lambda_function_name
   timeout = 10
   runtime = "python3.8"
   handler = "health_check.lambda_handler"
@@ -24,20 +20,16 @@ resource "aws_lambda_function" "health_check_lambda" {
       S3_BUCKET_NAME = aws_s3_bucket.health_check_bucket.bucket
     }
   }
+
+  depends_on = [
+    aws_cloudwatch_log_group.log_group
+  ]
 }
 
-resource "aws_s3_bucket" "health_check_bucket" {
-  bucket = "status-check-bucket"
-  force_destroy = true
+resource "aws_cloudwatch_log_group" "log_group" {
+  name              = "/aws/lambda/${var.lambda_function_name}"
+  retention_in_days = 7
 }
-
-resource "aws_s3_bucket_versioning" "versioning_example" {
-  bucket = aws_s3_bucket.health_check_bucket.id
-  versioning_configuration {
-    status = "Enabled"
-  }
-}
-
 
 resource "aws_iam_role" "lambda_role" {
   name = "lambda_role"
