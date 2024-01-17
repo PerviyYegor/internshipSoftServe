@@ -63,10 +63,17 @@ resource "aws_iam_role_policy" "lambda_policy" {
       {
         Action   = [
           "s3:PutObject",
+          "s3:PutObjectAcl",
         ]
         Effect   = "Allow",
         Resource = "*"
       },
+      {
+            "Sid": "CloudWatchMetricsPermissions",
+            "Effect": "Allow",
+            "Action": "cloudwatch:PutMetricData",
+            "Resource": "*"
+      }
     ]
   })
 }

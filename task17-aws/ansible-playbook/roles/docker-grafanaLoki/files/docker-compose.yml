@@ -17,8 +17,8 @@ services:
       - loki
     ports:
       - "3000:3000"
-    volumes:
-      - ~/provisioning/:/usr/share/grafana/conf/provisioning/datasources/
+    #volumes:
+    #  - ~/provisioning/:/usr/share/grafana/conf/provisioning/datasources/
       
     networks:
       - grafana
