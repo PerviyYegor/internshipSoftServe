@@ -17,8 +17,11 @@ services:
       - loki
     ports:
       - "3000:3000"
-    #volumes:
-    #  - ~/provisioning/:/usr/share/grafana/conf/provisioning/datasources/
+    volumes:
+      - /home/centos/provisioning/datasources:/etc/grafana/provisioning/datasources/
+      - /home/centos/provisioning/dashboards:/etc/grafana/provisioning/dashboards/
+    environment:
+      - GF_INSTALL_PLUGINS=yesoreyeram-infinity-datasource
       
     networks:
       - grafana

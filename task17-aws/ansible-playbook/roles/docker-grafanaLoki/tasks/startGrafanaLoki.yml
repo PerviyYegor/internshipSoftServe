@@ -3,15 +3,30 @@
     src: "{{ role_path }}/files/docker-compose.yml"
     dest: ~/docker-compose.yaml
 
-- name: Create a directory if it does not exist
+- name: Create a datasources directory if it does not exist
   ansible.builtin.file:
-    path: ~/provisioning/
+    path: ~/provisioning/datasources
     state: directory
 
-#- name: Copy Grafana conf file
-#  template:
-#    src: "{{ role_path }}/templates/datasource.yaml.j2"
-#    dest: ~/provisioning/datasource.yaml
+- name: Create a dashboard directory if it does not exist
+  ansible.builtin.file:
+    path: ~/provisioning/dashboards
+    state: directory
+
+- name: Copy Grafana dashboard provisioning file
+  template:
+    src: "{{ role_path }}/templates/datasource.yaml.j2"
+    dest: ~/provisioning/datasources/datasource.yaml
+
+- name: Copy Grafana dashboard provisioning file
+  copy:
+    src: "{{ role_path }}/files/dashboard.yaml"
+    dest: ~/provisioning/dashboards/dashboard.yaml
+
+- name: Copy Grafana dashboard file
+  copy:
+    src: "{{ role_path }}/files/AWS_Lambda.json"
+    dest: ~/provisioning/dashboards/AWS_Lambda.json
 #
 - name: Start Loki with Docker Compose
   become_user: centos

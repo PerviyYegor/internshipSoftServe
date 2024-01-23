@@ -3,10 +3,7 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": {
-          "type": "datasource",
-          "uid": "grafana"
-        },
+        "datasource": "-- Grafana --",
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -39,8 +36,8 @@
     },
     {
       "datasource": {
-        "type": "marcusolsson-json-datasource",
-        "uid": "fc2a37cb-3ef6-45d1-9964-b2abd47945fb"
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "PC3988D4F1D604C00"
       },
       "fieldConfig": {
         "defaults": {
@@ -64,17 +61,18 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unitScale": true
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 6,
-        "w": 15,
+        "h": 5,
+        "w": 22,
         "x": 0,
         "y": 1
       },
-      "id": 16,
+      "id": 18,
       "options": {
         "cellHeight": "sm",
         "footer": {
@@ -87,37 +85,36 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "10.2.3",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
-          "cacheDurationSeconds": 5,
+          "columns": [],
           "datasource": {
-            "type": "marcusolsson-json-datasource",
-            "uid": "fc2a37cb-3ef6-45d1-9964-b2abd47945fb"
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "PC3988D4F1D604C00"
           },
-          "fields": [
-            {
-              "jsonPath": "$.[*]",
-              "language": "jsonpath",
-              "name": "",
-              "type": "string"
-            }
-          ],
-          "method": "GET",
-          "queryParams": "",
+          "filters": [],
+          "format": "table",
+          "global_query_id": "",
           "refId": "A",
-          "urlPath": ""
+          "root_selector": "",
+          "source": "url",
+          "type": "json",
+          "url": "https://status-check-bucket.s3.amazonaws.com/health_check_output.json",
+          "url_options": {
+            "data": "",
+            "method": "GET"
+          }
         }
       ],
-      "title": "Table of current instances",
+      "title": "Current running instances",
       "transformations": [
         {
           "id": "extractFields",
           "options": {
             "format": "json",
-            "keepTime": false,
             "replace": true,
-            "source": "*"
+            "source": "value"
           }
         }
       ],
@@ -129,7 +126,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 7
+        "y": 6
       },
       "id": 12,
       "panels": [],
@@ -160,7 +157,8 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unitScale": true
         },
         "overrides": []
       },
@@ -168,7 +166,7 @@
         "h": 8,
         "w": 3,
         "x": 0,
-        "y": 8
+        "y": 7
       },
       "id": 14,
       "options": {
@@ -186,12 +184,12 @@
         "showThresholdMarkers": false,
         "sizing": "auto"
       },
-      "pluginVersion": "10.2.3",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "datasource": {
             "type": "cloudwatch",
-            "uid": "b063f7c4-3239-4c83-8422-65b4b7aaf4c6"
+            "uid": "${datasource}"
           },
           "dimensions": {
             "Status": "*"
@@ -274,7 +272,8 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unitScale": true
         },
         "overrides": []
       },
@@ -282,7 +281,7 @@
         "h": 8,
         "w": 12,
         "x": 4,
-        "y": 8
+        "y": 7
       },
       "id": 13,
       "options": {
@@ -333,7 +332,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 16
+        "y": 15
       },
       "id": 11,
       "panels": [],
@@ -349,7 +348,7 @@
         "h": 6,
         "w": 24,
         "x": 0,
-        "y": 17
+        "y": 16
       },
       "id": 17,
       "options": {
@@ -368,14 +367,15 @@
             "type": "cloudwatch",
             "uid": "${datasource}"
           },
-          "dimensions": {},
+          "dimensions": {
+            "LogGroupName": "*"
+          },
           "expression": "fields @timestamp, @message |\n sort @timestamp desc ",
           "id": "",
           "label": "",
           "logGroups": [
             {
-              "accountId": "478151779922",
-              "arn": "arn:aws:logs:us-east-1:478151779922:log-group:/aws/lambda/healthCheckLambda:*",
+              "arn": "/aws/lambda/healthCheckLambda",
               "name": "/aws/lambda/healthCheckLambda"
             }
           ],
@@ -412,7 +412,8 @@
       "error": false,
       "fieldConfig": {
         "defaults": {
-          "links": []
+          "links": [],
+          "unitScale": true
         },
         "overrides": []
       },
@@ -423,7 +424,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 23
+        "y": 22
       },
       "hiddenSeries": false,
       "id": 1,
@@ -447,7 +448,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "10.2.3",
+      "pluginVersion": "10.3.1",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -590,7 +591,8 @@
       "error": false,
       "fieldConfig": {
         "defaults": {
-          "links": []
+          "links": [],
+          "unitScale": true
         },
         "overrides": []
       },
@@ -601,7 +603,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 30
+        "y": 29
       },
       "hiddenSeries": false,
       "id": 7,
@@ -625,7 +627,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "10.2.3",
+      "pluginVersion": "10.3.1",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -732,7 +734,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 37
+        "y": 36
       },
       "hiddenSeries": false,
       "id": 8,
@@ -863,7 +865,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 44
+        "y": 43
       },
       "hiddenSeries": false,
       "id": 10,
@@ -1018,8 +1020,8 @@
       {
         "current": {
           "selected": false,
-          "text": "cloudwatch",
-          "value": "b063f7c4-3239-4c83-8422-65b4b7aaf4c6"
+          "text": "CloudWatch",
+          "value": "{$DS_CloudWatch_ID}"
         },
         "hide": 0,
         "includeAll": false,
@@ -1028,7 +1030,6 @@
         "name": "datasource",
         "options": [],
         "query": "cloudwatch",
-        "queryValue": "",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -1205,6 +1206,6 @@
   "timezone": "browser",
   "title": "AWS Lambda",
   "uid": "AWSLambda",
-  "version": 8,
+  "version": 5,
   "weekStart": ""
 }
