@@ -4,8 +4,8 @@ provider "aws" {
 data "aws_region" "current" {}
 
 data "aws_ami" "latest_amazon_linux" {
-  owners = ["125523088429"]  # Owner ID for CentOS AMIs
-  most_recent= true
+  owners      = ["125523088429"] # Owner ID for CentOS AMIs
+  most_recent = true
 
   filter {
     name   = "name"
@@ -24,6 +24,7 @@ data "aws_ami" "latest_amazon_linux" {
 
 resource "aws_instance" "ec_instance" {
   ami                         = data.aws_ami.latest_amazon_linux.id
+  iam_instance_profile        = aws_iam_instance_profile.grafana_instance_profile.id
   instance_type               = var.instance_type
   key_name                    = aws_key_pair.web_server_key.key_name
   subnet_id                   = aws_default_subnet.main.id
